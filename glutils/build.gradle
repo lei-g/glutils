@@ -26,16 +26,14 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
 
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     // log打印
-    api(name: 'logger', ext: 'aar')
-    api(name: 'librarylog4a', ext: 'aar')
+    implementation(name: 'logger', ext: 'aar')
+    implementation(name: 'librarylog4a', ext: 'aar')
 }
 
 // 发布maven配置
@@ -47,8 +45,8 @@ uploadArchives {
             pom.groupId = 'com.nebula'
             pom.artifactId = "glutils"
             pom.version = "0.0.2"
-            //pom.packaging = 'aar'
-            repository(url:"file://D://repository/")
+            pom.packaging = 'aar'
+            repository(url:"file:///D:/repository")
         }
     }
 }
