@@ -8,16 +8,16 @@ import android.content.Context
  */
 interface ILog {
 
-    fun init(context: Context)
+    fun init(context: Context, isDebug: Boolean)
 
-    fun v(message: String)
+    fun v(tag: String, message: String)
 
-    fun d(message: String)
+    fun d(tag: String, message: String)
 
-    fun i(message: String)
+    fun i(tag: String, message: String)
 
-    fun w(message: String)
+    fun w(tag: String, message: String)
 
-    fun e(message: String)
+    fun e(tag: String, message: String)
 
 }

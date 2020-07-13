@@ -9,6 +9,7 @@ import android.content.Context
 object LogUtils {
 
     lateinit var mImpl: ILog
+    var mTag: String = ""
 
     /*
      * why do this?
@@ -23,35 +24,39 @@ object LogUtils {
     }
 
     @JvmStatic
-    fun init(context: Context) {
-        LogInit.init(context)
-        setImpl(LoggerImpl())
-        mImpl.init(context)
+    fun init(context: Context, isDebug: Boolean) {
+        setImpl(Log4aImpl())
+        mImpl.init(context, isDebug)
+    }
+
+    @JvmStatic
+    fun setTag(tag: String) {
+        mTag = tag
     }
 
     @JvmStatic
     fun v(message: String) {
-        mImpl.d(message)
+        mImpl.d(mTag, message)
     }
 
     @JvmStatic
     fun d(message: String) {
-        mImpl.d(message)
+        mImpl.d(mTag, message)
     }
 
     @JvmStatic
     fun i(message: String) {
-        mImpl.d(message)
+        mImpl.d(mTag, message)
     }
 
     @JvmStatic
     fun w(message: String) {
-        mImpl.w(message)
+        mImpl.w(mTag, message)
     }
 
     @JvmStatic
     fun e(message: String) {
-        mImpl.e(message)
+        mImpl.e(mTag, message)
     }
 
 }
