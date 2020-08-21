@@ -8,7 +8,9 @@ import android.content.Context
  */
 interface ILog {
 
-    fun init(context: Context, isDebug: Boolean)
+    fun init(context: Context, globalTag: String, isDebug: Boolean)
+
+    fun flush()
 
     fun v(tag: String, message: String)
 
@@ -18,6 +20,13 @@ interface ILog {
 
     fun w(tag: String, message: String)
 
+    fun w(tag: String, msg: String, tr: Throwable)
+
+    fun w(tag: String, tr: Throwable)
+
     fun e(tag: String, message: String)
 
+    fun e(tag: String, msg: String, tr: Throwable)
+
+    fun e(tag: String, tr: Throwable)
 }

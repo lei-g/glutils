@@ -1,6 +1,7 @@
 package com.nebula.glutils.log
 
 import android.content.Context
+import me.pqpo.librarylog4a.Log4a
 
 /**
  * @author: joey
@@ -9,7 +10,6 @@ import android.content.Context
 object LogUtils {
 
     lateinit var mImpl: ILog
-    var mTag: String = ""
 
     /*
      * why do this?
@@ -24,39 +24,59 @@ object LogUtils {
     }
 
     @JvmStatic
-    fun init(context: Context, isDebug: Boolean) {
+    fun init(context: Context, globalTag: String, isDebug: Boolean) {
         setImpl(Log4aImpl())
-        mImpl.init(context, isDebug)
+        mImpl.init(context, globalTag, isDebug)
     }
 
     @JvmStatic
-    fun setTag(tag: String) {
-        mTag = tag
+    fun flush() {
+        mImpl.flush()
     }
 
     @JvmStatic
-    fun v(message: String) {
-        mImpl.d(mTag, message)
+    fun v(tag: String, message: String) {
+        mImpl.v(tag, message)
     }
 
     @JvmStatic
-    fun d(message: String) {
-        mImpl.d(mTag, message)
+    fun d(tag: String, message: String) {
+        mImpl.d(tag, message)
     }
 
     @JvmStatic
-    fun i(message: String) {
-        mImpl.d(mTag, message)
+    fun i(tag: String, message: String) {
+        mImpl.i(tag, message)
     }
 
     @JvmStatic
-    fun w(message: String) {
-        mImpl.w(mTag, message)
+    fun w(tag: String, message: String) {
+        mImpl.w(tag, message)
     }
 
     @JvmStatic
-    fun e(message: String) {
-        mImpl.e(mTag, message)
+    fun w(tag: String, message: String, tr: Throwable) {
+        mImpl.w(tag, message, tr)
+    }
+
+    @JvmStatic
+    fun w(tag: String, tr: Throwable) {
+        mImpl.w(tag, tr)
+    }
+
+    @JvmStatic
+    fun e(tag: String, message: String) {
+        mImpl.e(tag, message)
+    }
+
+    @JvmStatic
+    fun e(tag: String, message: String, tr: Throwable) {
+        mImpl.e(tag, message, tr)
+    }
+
+    @JvmStatic
+    fun e(tag: String, tr: Throwable) {
+        mImpl.e(tag, tr)
     }
 
 }

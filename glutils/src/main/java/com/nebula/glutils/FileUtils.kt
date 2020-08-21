@@ -13,7 +13,7 @@ object FileUtils {
      * @param filePath 文件名，包含绝对路径
      * @return 存在返回true，不存在返回false
      */
-    fun isFileExist(filePath: String?): Boolean {
+    fun isFileExist(filePath: String): Boolean {
         try {
             val f = File(filePath)
             if (!f.exists()) {
@@ -31,10 +31,10 @@ object FileUtils {
      * @param newPath String 复制后路径
      * @return 字节数 文件大小
      */
-    fun copyFile(oldPath: String?, newPath: String?): Int {
+    fun copyFile(oldPath: String, newPath: String): Int {
         var bytesum = 0
         var byteread = 0
-        var inStream: InputStream? = null
+        var inStream: InputStream
         val oldfile = File(oldPath)
         if (!oldfile.exists()) {
             return 0
@@ -140,7 +140,7 @@ object FileUtils {
      * 清除文件内容
      * @param fileName
      */
-    fun clearInfoForFile(fileName: String?) {
+    fun clearInfoForFile(fileName: String) {
         val file = File(fileName)
         try {
             if (!file.exists()) {

@@ -6,10 +6,8 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Environment
 import androidx.core.content.ContextCompat
-import com.nebula.glutils.BuildConfig
 import me.pqpo.librarylog4a.Level
 import me.pqpo.librarylog4a.Log4a
-import me.pqpo.librarylog4a.LogData
 import me.pqpo.librarylog4a.appender.AndroidAppender
 import me.pqpo.librarylog4a.appender.FileAppender
 import me.pqpo.librarylog4a.formatter.DateFileFormatter
@@ -23,14 +21,14 @@ import java.util.*
  * @author: joey
  * @date: 2020/7/5
  */
+@Suppress("DEPRECATION")
 class Log4aImpl : ILog {
 
     companion object {
         const val BUFFER_SIZE = 1024 * 400 //400k
-        const val GLOBAL_TAG = "GL"
     }
 
-    override fun init(context: Context, isDebug: Boolean) {
+    override fun init(context: Context, globalTag: String, isDebug: Boolean) {
         val level: Int
         level = if (isDebug) {
             Level.DEBUG
@@ -38,7 +36,7 @@ class Log4aImpl : ILog {
             Level.INFO
         }
         val wrapInterceptor = Interceptor { logData ->
-            logData.tag = GLOBAL_TAG + "-" + logData.tag + " "
+            logData.tag = globalTag + "-" + logData.tag + " "
             true
         }
         val androidAppender = AndroidAppender.Builder()
@@ -51,14 +49,14 @@ class Log4aImpl : ILog {
         val logPath: String
         logPath = if (checkSDPermission(context)) {
             // has write SD permission
-            val logDir = Environment.getExternalStorageDirectory().absolutePath + "/gl/logs"
+            val logDir = Environment.getExternalStorageDirectory().absolutePath + File.separator + context.opPackageName + File.separator + "logs"
             val log = createLogDir(logDir)
             log.absolutePath + File.separator + time + ".txt"
         } else {
             // no write SD permission
             cache.absolutePath + File.separator + time + ".txt"
         }
-        Log4a.i(GLOBAL_TAG, "logPath = $logPath")
+        Log4a.i(globalTag, "logPath = $logPath")
         val fileAppender = FileAppender.Builder(context)
                 .setLogFilePath(logPath)
                 .setLevel(level)
@@ -112,6 +110,10 @@ class Log4aImpl : ILog {
         return log
     }
 
+    override fun flush() {
+        Log4a.flush()
+    }
+
     override fun v(tag: String, message: String) {
         Log4a.v(tag, message)
     }
@@ -128,8 +130,24 @@ class Log4aImpl : ILog {
         Log4a.w(tag, message)
     }
 
+    override fun w(tag: String, msg: String, tr: Throwable) {
+        Log4a.w(tag, msg, tr)
+    }
+
+    override fun w(tag: String, tr: Throwable) {
+        Log4a.w(tag, tr)
+    }
+
     override fun e(tag: String, message: String) {
         Log4a.e(tag, message)
+    }
+
+    override fun e(tag: String, msg: String, tr: Throwable) {
+        Log4a.e(tag, msg, tr)
+    }
+
+    override fun e(tag: String, tr: Throwable) {
+        Log4a.e(tag, tr)
     }
 
 }
