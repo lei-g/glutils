@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 19
         targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.0.2"
     }
 
     buildTypes {
@@ -23,6 +23,8 @@ dependencies {
     implementation "androidx.core:core-ktx:+"
 
     implementation 'com.github.pqpo:Log4a:1.4.2'
+
+    implementation 'com.squareup.okhttp3:okhttp:3.4.1'
 }
 
 // 发布maven配置
@@ -33,6 +35,6 @@ uploadArchives{
         repository(url: uri('../repository'))
         pom.groupId = "com.gl"
         pom.artifactId = "glutils"
-        pom.version = "0.0.1"
+        pom.version = "0.0.2"
     }
 }
